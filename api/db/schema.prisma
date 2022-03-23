@@ -9,6 +9,14 @@ generator client {
 }
 
 model Post {
+  id        Int       @id @default(autoincrement())
+  title     String
+  body      String
+  comments  Comment[]
+  createdAt DateTime  @default(now())
+}
+
+model Trip {
   id        Int      @id @default(autoincrement())
   title     String
   body      String
@@ -31,4 +39,13 @@ model User {
   salt                String
   resetToken          String?
   resetTokenExpiresAt DateTime?
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  name      String
+  body      String
+  post      Post     @relation(fields: [postId], references: [id])
+  postId    Int
+  createdAt DateTime @default(now())
 }
